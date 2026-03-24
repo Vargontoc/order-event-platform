@@ -3,18 +3,25 @@ spring:
     url: jdbc:postgresql://localhost:5433/order_ingestor_db
     username: ${DB_USER:postgres}
     password: ${DB_PASS:postgres}
-
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
   kafka:
     bootstrap-servers: localhost:9092
-    consumer:
-      group-id: order-ingestor-local
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      acks: all                  # Espera confirmación de todos los brokers
+      retries: 3                 # Reintenta 3 veces si falla
 
 management:
   endpoints:
     web:
       exposure:
         include: health,info,prometheus
-  metrics:
-    export:
-      prometheus:
+
+  prometheus:
+    metrics:
+      export:
         enabled: true
