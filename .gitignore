@@ -1,0 +1,18 @@
+# Java
+target/
+*.class
+*.jar
+!**/test/**/*.jar
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+
+# Entorno
+.env
+*.env.local
+
+# OS
+.DS_Store
+Thumbs.dbs
