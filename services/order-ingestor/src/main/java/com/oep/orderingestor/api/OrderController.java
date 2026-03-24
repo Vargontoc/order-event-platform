@@ -12,6 +12,7 @@ import com.oep.orderingestor.api.dto.OrderResponse;
 import com.oep.orderingestor.application.CreateOrderUseCase;
 import com.oep.orderingestor.domain.model.Order;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 
@@ -24,7 +25,7 @@ public class OrderController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderResponse postMethodName(@RequestBody CreateOrderRequest request) {
+    public OrderResponse postMethodName(@RequestBody @Valid CreateOrderRequest request) {
         Order order = createOrderUseCase.execute(Order.builder().customerId(request.customerId()).totalAmount(request.totalAmount()).build());
         return new OrderResponse(order.getId(), order.getCustomerId(), order.getTotalAmount(), order.getStatus(), order.getCreatedAt());
     }
