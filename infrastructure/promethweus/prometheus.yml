@@ -1,0 +1,15 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'order-ingestor'
+    static_configs:
+      - targets: ['host.docker.internal:8081']
+
+  - job_name: 'order-processor'
+    static_configs:
+      - targets: ['host.docker.internal:8082']
+
+  - job_name: 'order-query'
+    static_configs:
+      - targets: ['host.docker.internal:8083']
