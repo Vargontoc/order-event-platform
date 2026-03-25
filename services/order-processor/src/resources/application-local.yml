@@ -1,0 +1,32 @@
+server:
+  port: 8082
+  
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5433/order_processor_db
+    username: ${DB_USER:postgres}
+    password: ${DB_PASS:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+  
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: order-processor
+      auto-offset-reset: earliest
+      enable-auto-commit: false        # ACK manual — controlamos cuándo confirmamos
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+
+  prometheus:
+    metrics:
+      export:
+        enabled: true
